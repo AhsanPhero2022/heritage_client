@@ -9,57 +9,8 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import Container from "../Container";
 import { Link } from "react-router-dom";
-
-const properties = [
-  {
-    id: 1,
-    image:
-      "https://www.nobroker.in/blog/wp-content/uploads/2022/07/Modern-Bedroom-Design.jpg",
-    name: "SunnySlope Suites",
-    location: "New York, NY",
-    price: 250000,
-  },
-  {
-    id: 2,
-    image:
-      "https://dropinblog.net/34246798/files/featured/Brilliant_Tips_for_Stone_Types_Newbies.jpg",
-    name: "SunnySlope Suites",
-    location: "Portland, OR",
-    price: 250000,
-  },
-  {
-    id: 3,
-    image:
-      "https://static.asianpaints.com/content/dam/asianpaintsbeautifulhomes/202303/15-small-bedroom-design-ideas-to-create-a-stylish-space/small-wooden-bedroom-decoration.jpg",
-    name: "SunnySlope Suites",
-    location: "Los Angeles, CA",
-    price: 250000,
-  },
-  {
-    id: 4,
-    image:
-      "https://cms.interiorcompany.com/wp-content/uploads/2024/01/add-an-elegant-touch-with-a-black-and-grey-bedroom-romantic-bedroom-decor.jpg",
-    name: "SunnySlope Suites",
-    location: "Miami, FL",
-    price: 250000,
-  },
-  {
-    id: 5,
-    image:
-      "https://i.pinimg.com/736x/f4/25/b1/f425b1e80dab7934b5d9f6fe0181105a.jpg",
-    name: "SunnySlope Suites",
-    location: "Denver, CO",
-    price: 250000,
-  },
-  {
-    id: 6,
-    image:
-      "https://images.livspace-cdn.com/plain/https://jumanji.livspace-cdn.com/magazine/wp-content/uploads/sites/2/2022/10/20174539/cover-32-1.jpg",
-    name: "SunnySlope Suites",
-    location: "Dhaka, Bangladesh",
-    price: 250000,
-  },
-];
+import { useEffect, useState } from "react";
+import { PropertyProps } from "../../../types";
 
 const Properties = ({
   title = "",
@@ -68,6 +19,31 @@ const Properties = ({
   title?: string;
   allProperty?: boolean;
 }) => {
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/properties");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setProperties(data);
+      } catch (error) {
+        console.error("There was a problem with the fetch operation:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="mt-20">
       <Container>
@@ -108,7 +84,7 @@ const Properties = ({
             },
           }}
         >
-          {properties.map((property) => (
+          {properties.map((property: PropertyProps) => (
             <SwiperSlide className="" key={property.id}>
               <div>
                 <div className="bg-[#F9FAFB] max-w-385px">

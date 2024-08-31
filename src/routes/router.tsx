@@ -4,8 +4,10 @@ import Home from "../pages/Home";
 import About from "../pages/About";
 import BuyScreen from "../pages/BuyScreen";
 import PropertyDetails from "../pages/PropertyDetails";
-import SignIn from "../pages/SignIn";
+
 import AllProperties from "../pages/AllProperties";
+import SignInPage from "../auth/SignInPage";
+import SignUpPage from "../auth/SignUpPage";
 
 const routes = [
   {
@@ -32,11 +34,15 @@ const routes = [
         path: "/allProperties",
         element: <AllProperties />,
       },
-      {
-        path: "/signIn",
-        element: <SignIn />,
-      },
     ],
+  },
+  {
+    path: "/login",
+    element: <SignInPage />,
+  },
+  {
+    path: "/sign-up",
+    element: <SignUpPage />,
   },
 ];
 

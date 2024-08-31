@@ -10,6 +10,11 @@ input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
 }
+.glassmorphism-auth {
+  background: rgba(6, 3, 3, 0.711);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
 
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;

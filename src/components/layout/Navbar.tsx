@@ -2,6 +2,9 @@ import { useState } from "react";
 import Container from "../ui/Container";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import { Button } from "../ui/button";
+import { useAuth, useUser } from "@clerk/clerk-react";
+import { toast } from "react-toastify";
 
 const NavItems = [
   { id: "1", name: "Home", route: "/" },
@@ -12,6 +15,18 @@ const NavItems = [
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user } = useUser();
+  const { signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      toast.success("You have successfully signed out!");
+    } catch (error) {
+      toast.error("Error signing out. Please try again.");
+    }
+  };
+
   return (
     <div className="bg-[#ECF5FF] z-[999] border-b-2 border-secondary py-1 text-[#000000]">
       <Container>
@@ -101,7 +116,15 @@ const Navbar = () => {
               </li>
               <Link to="/signIn">
                 <li className="cursor-pointer text-sm font-semibold group relative px-2 md:text-[18px] ">
-                  Sign In
+                  {user ? (
+                    <Button onClick={handleSignOut} variant={"outline"}>
+                      Sign Out
+                    </Button>
+                  ) : (
+                    <Link to="/login">
+                      <Button variant={"outline"}>Sign in</Button>
+                    </Link>
+                  )}
                 </li>
               </Link>
             </ul>
