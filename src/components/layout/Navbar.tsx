@@ -1,12 +1,13 @@
 import { useState } from "react";
 import Container from "../ui/Container";
 import { Link } from "react-router-dom";
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/logo.png";
 
 const NavItems = [
-  { id: "1", name: "Buy", route: "/buyScreen" },
-  { id: "2", name: "Sell", route: "/propertyDetails" },
-  { id: "3", name: "About", route: "/about" },
+  { id: "1", name: "Home", route: "/" },
+  { id: "2", name: "Buy", route: "/buyScreen" },
+  { id: "3", name: "Sell", route: "/propertyDetails" },
+  { id: "4", name: "About", route: "/about" },
 ];
 
 const Navbar = () => {
@@ -15,7 +16,6 @@ const Navbar = () => {
     <div className="bg-[#ECF5FF] z-[999] border-b-2 border-secondary py-1 text-[#000000]">
       <Container>
         <header className=" mx-auto flex justify-between items-center z-50 ">
-          {/* //*Nav links */}
           <nav
             className={
               mobileMenuOpen
@@ -23,7 +23,6 @@ const Navbar = () => {
                 : "w-full lg:w-fit lg:static absolute top-[-550px] left-0 transition-all duration-500 lg:z-0 -z-50"
             }
           >
-            {/* //* For Laptop or Desktop */}
             <div className="hidden lg:block">
               <ul className="flex justify-end items-center gap-2 lg:flex-row flex-col lg:py-0 py-10">
                 {NavItems.map((navItem) => (
@@ -35,7 +34,7 @@ const Navbar = () => {
                 ))}
               </ul>
             </div>
-            {/* //*For Tab or Mobile */}
+
             <div className="block lg:hidden">
               <ul className="flex justify-end items-center gap-2 lg:flex-row flex-col lg:py-0 py-10 bg-[#ECF5FF] border-b border-secondary">
                 {NavItems.map((navItem) => (
@@ -50,7 +49,7 @@ const Navbar = () => {
               </ul>
             </div>
           </nav>
-          {/* //* Menu Icons for mobile */}
+
           <div className="lg:hidden">
             {mobileMenuOpen ? (
               <div onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
@@ -88,13 +87,13 @@ const Navbar = () => {
               </div>
             )}
           </div>
-          {/* //*Company logo */}
+
           <div>
             <Link to="/" className="cursor-pointer">
               <img src={logo} className="w-[53px] h-20" alt="" />
             </Link>
           </div>
-          {/* //*More nav Links */}
+
           <div className="">
             <ul className="flex justify-end items-center gap-2 flex-row py-0">
               <li className="cursor-pointer text-sm group relative px-2 md:text-[18px] ">

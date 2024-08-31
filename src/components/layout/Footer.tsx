@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/logo.png";
 import Container from "../ui/Container";
 import { FaFacebook, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { PiHandPeace } from "react-icons/pi";
@@ -10,7 +10,6 @@ const Footer = () => {
       <Container>
         <div className="mt-12 border-t border-gray-200 pt-8">
           <div className="lg:grid lg:grid-cols-10  gap-8 md:px-8">
-            {/* //*Company Details */}
             <div className=" lg:col-start-1 lg:col-end-4 mb-10 lg:mb-0">
               <Link to="/" className="cursor-pointer ">
                 <img src={logo} className="w-[53px] h-20" alt="" />
@@ -22,7 +21,6 @@ const Footer = () => {
             </div>
             <div className=" lg:col-start-5 lg:col-end-11 ">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-10 gap-2 lg:justify-items-end ">
-                {/* Product Items */}
                 <div className="md:col-span-1 lg:col-span-2 mb-10 lg:mb-0">
                   <h3 className="text-sm font-semibold text-gray-400 uppercase">
                     Product
@@ -48,7 +46,7 @@ const Footer = () => {
                     </li>
                   </ul>
                 </div>
-                {/* Company Items */}
+
                 <div className="md:col-span-1 lg:col-span-2 mb-10 lg:mb-0">
                   <h3 className="text-sm font-semibold text-gray-400 uppercase">
                     Company
@@ -74,7 +72,7 @@ const Footer = () => {
                     </li>
                   </ul>
                 </div>
-                {/* Resources Items */}
+
                 <div className="md:col-span-1 lg:col-span-2 mb-10 lg:mb-0">
                   <h3 className="text-sm font-semibold text-gray-400 uppercase">
                     Resources
@@ -100,7 +98,7 @@ const Footer = () => {
                     </li>
                   </ul>
                 </div>
-                {/* Social Items */}
+
                 <div className="md:col-span-1 lg:col-span-2 mb-10 lg:mb-0">
                   <h3 className="text-sm font-semibold text-gray-400 uppercase">
                     Social
@@ -126,7 +124,7 @@ const Footer = () => {
                     </li>
                   </ul>
                 </div>
-                {/* Legal Items */}
+
                 <div className="md:col-span-1 lg:col-span-2 mb-10 lg:mb-0">
                   <h3 className="text-sm font-semibold text-gray-400 uppercase">
                     Legal
@@ -156,7 +154,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        {/* //*Date company and social */}
+
         <hr className="w-full mx-auto mt-20 bg-[#CEE7FF] text-[#CEE7FF] border-[#CEE7FF] h-[2px]" />
         <div className="sm:flex justify-between items-center py-8">
           <div className="text-center text-gray-400 mb-5 sm:mb-0">
