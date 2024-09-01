@@ -8,6 +8,12 @@ import PropertyDetails from "../pages/PropertyDetails";
 import AllProperties from "../pages/AllProperties";
 import SignInPage from "../auth/SignInPage";
 import SignUpPage from "../auth/SignUpPage";
+import ManageRenLayout from "../components/layout/ManageRenLayout";
+
+import CreateProperty from "../components/ManageRentals/CreateProperty";
+import AllProperty from "../components/ManageRentals/AllProperty";
+import UserProfilePage from "../components/ManageRentals/UserProfilePage";
+import PropertyWin from "../components/ManageRentals/PropertyWin";
 
 const routes = [
   {
@@ -33,6 +39,29 @@ const routes = [
       {
         path: "/allProperties",
         element: <AllProperties />,
+      },
+    ],
+  },
+  {
+    path: "manage-rentals",
+    element: <ManageRenLayout />,
+    children: [
+      {
+        index: true,
+
+        element: <UserProfilePage />,
+      },
+      {
+        path: "property-win",
+        element: <PropertyWin />,
+      },
+      {
+        path: "create-property",
+        element: <CreateProperty />,
+      },
+      {
+        path: "all-property",
+        element: <AllProperty />,
       },
     ],
   },

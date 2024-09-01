@@ -16,7 +16,7 @@ const SignInPage: React.FC = () => {
 
       <div className="flex justify-center items-center glassmorphism-auth h-screen w-full">
         <SignIn
-          afterSignInUrl="/dashboard" // URL to redirect after sign-in
+          afterSignInUrl="/manage-rentals"
           appearance={{
             baseTheme: dark,
           }}

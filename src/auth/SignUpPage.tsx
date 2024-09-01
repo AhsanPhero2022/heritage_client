@@ -11,7 +11,7 @@ const SignUpPage = () => {
 
       <div className="flex justify-center  items-center glassmorphism-auth h-screen w-full">
         <SignUp
-          afterSignInUrl="/dashboard"
+          afterSignInUrl="/manage-rentals"
           appearance={{
             baseTheme: dark,
           }}
