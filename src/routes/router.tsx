@@ -16,6 +16,7 @@ import UserProfilePage from "../components/ManageRentals/UserProfilePage";
 import PropertyWin from "../components/ManageRentals/PropertyWin";
 import { Params } from "react-router-dom";
 import CreateTestimonial from "../components/ManageRentals/CreateTestimonial";
+import SortedProperties from "../pages/SotedProperties";
 const routes = [
   {
     path: "/",
@@ -42,6 +43,10 @@ const routes = [
       {
         path: "/allProperties",
         element: <AllProperties />,
+      },
+      {
+        path: "/sorted",
+        element: <SortedProperties />,
       },
     ],
   },

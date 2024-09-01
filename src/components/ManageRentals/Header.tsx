@@ -9,7 +9,7 @@ const Header = () => {
         <div className="flex items-center">
           <div className="relative">
             <button className="bg-color-1 text-white px-4 py-2 rounded-md flex items-center">
-              My Campaign
+              Manage Rentals
             </button>
           </div>
         </div>

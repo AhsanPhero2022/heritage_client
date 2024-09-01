@@ -8,17 +8,15 @@ import { BsTextarea } from "react-icons/bs";
 import { VscLayoutStatusbar } from "react-icons/vsc";
 import { useEffect, useState } from "react";
 import { PropertyProps } from "../types";
-import HomeLoanSlider from "../components/ui/HomeLoanSlider";
-import Testimonial from "../components/ui/shared/Testimonial";
 
-const AllProperties = () => {
+const SortedProperties = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/properties");
+        const response = await fetch("http://localhost:5000/price");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -41,9 +39,12 @@ const AllProperties = () => {
   return (
     <div className="my-20">
       <Container>
-        <div className="flex justify-between sm:items-center mb-6 flex-col sm:flex-row">
-          <h1 className="text-3xl text-[#111827] font-semibold mb-3 sm:mb-0">
-            All Properties
+        <div className="flex justify-between  sm:items-center mb-6 flex-col sm:flex-row">
+          <h1 className="text-3xl text-[#111827] font-bold mb-3 sm:mb-0">
+            All properties sorted by price
+          </h1>
+          <h1 className="text-3xl text-[#111827] font-bold mb-3 sm:mb-0">
+            Total Property: {properties.length}
           </h1>
         </div>
         <div className="">
@@ -111,11 +112,9 @@ const AllProperties = () => {
             </div>
           ))}
         </div>
-        <HomeLoanSlider />
       </Container>
-      <Testimonial />
     </div>
   );
 };
 
-export default AllProperties;
+export default SortedProperties;

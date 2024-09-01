@@ -9,57 +9,43 @@ import "swiper/css/pagination";
 import Container from "../Container";
 import { FaStar } from "react-icons/fa";
 import { FaRegStarHalfStroke } from "react-icons/fa6";
+import { useEffect, useState } from "react";
 
-const images = [
-  {
-    id: 1,
-    src: "https://r2.erweima.ai/imgcompressed/img/compressed_b4b0fe5f13483d0500a81c915929f106.webp",
-    alt: "Slide 1",
-    name: "Tony Stark",
-    title: "Marketing Manager",
-    description:
-      "The level of security provided by CypherPlay is unmatched. I feel confident using my card for both everyday purchases and travel. It's the peace of mind I was looking for.",
-  },
-  {
-    id: 2,
-    src: "https://media.licdn.com/dms/image/v2/D4D12AQFUrM6o_8m-WQ/article-inline_image-shrink_1500_2232/article-inline_image-shrink_1500_2232/0/1705940547574?e=1730332800&v=beta&t=MlNxztddf7QhaANGuvOVSM15mDGa02gH4jYTkq2CViw",
-    alt: "Slide 2",
-    name: "Bruce Wayne",
-    title: "Chief Technology Officer",
-    description:
-      "CypherPlay's user-friendly interface and robust features make it the best choice for managing my business expenses. I highly recommend it to anyone looking for a secure payment solution.",
-  },
-  {
-    id: 3,
-    src: "https://images.playground.com/431368d570ca4388b55d5efde628fda8.jpeg",
-    alt: "Slide 3",
-    name: "Diana Prince",
-    title: "Human Resources Manager",
-    description:
-      "The level of security provided by CypherPlay is unmatched. I feel confident using my card for both everyday purchases and travel. It's the peace of mind I was looking for.",
-  },
-  {
-    id: 4,
-    src: "https://images.playground.com/431368d570ca4388b55d5efde628fda8.jpeg",
-    alt: "Slide 4",
-    name: "Clark Kent",
-    title: "Public Relations Specialist",
-    description:
-      "CypherPlay's user-friendly interface and robust features make it the best choice for managing my business expenses. I highly recommend it to anyone looking for a secure payment solution.",
-  },
-
-  {
-    id: 5,
-    src: "https://images.playground.com/431368d570ca4388b55d5efde628fda8.jpeg",
-    alt: "Slide 4",
-    name: "Clark Kent",
-    title: "Public Relations Specialist",
-    description:
-      "CypherPlay's user-friendly interface and robust features make it the best choice for managing my business expenses. I highly recommend it to anyone looking for a secure payment solution.",
-  },
-];
+type TTestimonial = {
+  _id: number;
+  src: string;
+  alt: string;
+  name: string;
+  title: string;
+  description: string;
+};
 
 const Testimonial = () => {
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/testimonials");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setProperties(data);
+      } catch (error) {
+        console.error("There was a problem with the fetch operation:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div>
       <h1 className="text-4xl font-bold text-center my-16">Testimonials</h1>
@@ -90,7 +76,7 @@ const Testimonial = () => {
           modules={[FreeMode, Pagination]}
           className="mySwiper text-white"
         >
-          {images.map((item) => (
+          {properties.map((item: TTestimonial) => (
             <SwiperSlide className="mb-20">
               <div className="bg-[#ECF5FF] p-8">
                 <div className="flex gap-1 items-center justify-center mb-8">
@@ -107,7 +93,7 @@ const Testimonial = () => {
                   </p>
                   <img
                     src={item.src}
-                    alt={item.alt}
+                    alt="image"
                     className="mx-auto rounded-full w-12 h-12 mt-8"
                   />
                   <p className="text-xl font-semibold  text-[#111827]">

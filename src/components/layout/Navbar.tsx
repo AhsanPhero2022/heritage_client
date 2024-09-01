@@ -10,7 +10,8 @@ const NavItems = [
   { id: "1", name: "Home", route: "/" },
   { id: "2", name: "Buy", route: "/buyScreen" },
   { id: "3", name: "All Properties", route: "/allProperties" },
-  { id: "4", name: "About", route: "/about" },
+  { id: "4", name: "Sorted Properties", route: "/sorted" },
+  { id: "5", name: "About", route: "/about" },
 ];
 
 const Navbar = () => {

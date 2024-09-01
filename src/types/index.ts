@@ -5,4 +5,5 @@ export type PropertyProps = {
   name: string;
   location: string;
   price: number;
+  userId?: string;
 };

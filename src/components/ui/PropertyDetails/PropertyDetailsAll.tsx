@@ -4,11 +4,9 @@ import bathtub from "../../../assets/icons/bathtub.png";
 import balcony from "../../../assets/icons/balcony.png";
 import shelves from "../../../assets/icons/shelves.png";
 import Container from "../Container";
-
 import { useLoaderData } from "react-router-dom";
 import { PropertyProps } from "../../../types";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useState } from "react";
 import { toast } from "sonner";
 import { useUser } from "@clerk/clerk-react";
 
@@ -20,25 +18,24 @@ const PropertyDetailsAll = () => {
   const { user } = useUser(); // Get the current logged-in user
   const properties = useLoaderData() as PropertyProps;
   const { _id, name, image, price, location } = properties;
-  const [presentValue, setPresentValue] = useState(price);
   const { register, handleSubmit } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
-      const response = await fetch(`http://localhost:5000/bid_properties`, {
-        method: "post",
+      const response = await fetch(`http://localhost:5000/properties/${_id}`, {
+        method: "put",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          price: data,
-          userId: user?.id,
+          price: data.price,
+          user: user?.id,
         }),
       });
 
       if (response.ok) {
         toast.success(
-          "Your bid highest and successfully added to your profile!"
+          "your Bid is highest this property add to your profile successfully!"
         );
       } else {
         toast.error("Failed to submit the bid, please try again later.");
@@ -178,7 +175,7 @@ const PropertyDetailsAll = () => {
               </p>
               <div>
                 <p className="font-medium text-[#000000] mb-4">
-                  All time highest Bid: ${presentValue}k
+                  All time highest Bid: ${price}k
                 </p>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div>

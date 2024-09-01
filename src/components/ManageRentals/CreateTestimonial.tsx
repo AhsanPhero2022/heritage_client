@@ -2,7 +2,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 
 type Inputs = {
-  image: string;
+  name: string;
+  src: string;
   title: string;
   description: string;
 };
@@ -21,10 +22,10 @@ const CreateTestimonial = () => {
       });
 
       if (response.ok) {
-        toast.success("Property added successfully!");
+        toast.success("Testimonial added successfully!");
         reset(); // Reset the form after successful submission
       } else {
-        toast.error("Failed to add property. Please try again.");
+        toast.error("Failed to add testimonial Please try again.");
       }
     } catch (error) {
       toast.error("An error occurred. Please try again.");
@@ -39,6 +40,15 @@ const CreateTestimonial = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className=" gap-4 mb-8">
           <div className="w-1/2 mx-auto">
+            <h2 className="text-white font-semibold my-3">Name</h2>
+            <input
+              required
+              placeholder="Enter Title"
+              className="h-8 rounded-md w-full px-3"
+              {...register("name")}
+            />
+          </div>
+          <div className="w-1/2 mx-auto">
             <h2 className="text-white font-semibold my-3">Title</h2>
             <input
               required
@@ -52,7 +62,7 @@ const CreateTestimonial = () => {
             <input
               placeholder="Photo url"
               className="h-8 rounded-md w-full px-3"
-              {...register("image")}
+              {...register("src")}
             />
           </div>
         </div>
