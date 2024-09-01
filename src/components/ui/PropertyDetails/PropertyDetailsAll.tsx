@@ -1,30 +1,66 @@
-import location from "../../../assets/icons/fi-bs-marker.png";
-
+import map from "../../../assets/icons/fi-bs-marker.png";
 import bed from "../../../assets/icons/bed.png";
 import bathtub from "../../../assets/icons/bathtub.png";
 import balcony from "../../../assets/icons/balcony.png";
 import shelves from "../../../assets/icons/shelves.png";
-
 import Container from "../Container";
-import MultiRangeSlider from "../MultiRangeSlider";
+
+import { useLoaderData } from "react-router-dom";
+import { PropertyProps } from "../../../types";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useState } from "react";
+import { toast } from "sonner";
+import { useUser } from "@clerk/clerk-react";
+
+type FormValues = {
+  price: number;
+};
 
 const PropertyDetailsAll = () => {
+  const { user } = useUser(); // Get the current logged-in user
+  const properties = useLoaderData() as PropertyProps;
+  const { _id, name, image, price, location } = properties;
+  const [presentValue, setPresentValue] = useState(price);
+  const { register, handleSubmit } = useForm<FormValues>();
+
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    try {
+      const response = await fetch(`http://localhost:5000/bid_properties`, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          price: data,
+          userId: user?.id,
+        }),
+      });
+
+      if (response.ok) {
+        toast.success(
+          "Your bid highest and successfully added to your profile!"
+        );
+      } else {
+        toast.error("Failed to submit the bid, please try again later.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Failed to submit the bid, please try again later.");
+    }
+  };
+
   return (
     <div className="my-11">
       <Container>
-        {/* //*Header  */}
+        {/* //*Header */}
         <div className="">
           <div className="flex flex-col lg:flex-row lg:items-center mb-2">
-            <h1 className=" text-xl font-semibold text-[#010101]">
-              3 BHK Builder Floor for Sale in Site Ram Bazar Hyderabad
-            </h1>
-            <span className=" lg:ml-16 font-extrabold text-2xl">$ 300k</span>
+            <h1 className=" text-xl font-semibold text-[#010101]">{name}</h1>
+            <span className=" lg:ml-16 font-extrabold text-2xl">${price}K</span>
           </div>
           <div className="flex items-center mb-8">
-            <img src={location} alt="" className="size-4 mr-2" />
-            <p className="text-[#606060] font-normal">
-              Meadowshire Park, Greenfield, USA
-            </p>
+            <img src={map} alt="" className="size-4 mr-2" />
+            <p className="text-[#606060] font-normal">{location}</p>
           </div>
         </div>
         <div className="grid lg:grid-cols-3  gap-4 ">
@@ -33,21 +69,24 @@ const PropertyDetailsAll = () => {
             {/* //*Image Section */}
             <div>
               <img
-                src="https://blog.burtonacoustix.com/wp-content/uploads/2023/12/rippyfairy_hotel_room_with_sound_wave_on_windows_b416a12f-9faa-4f0a-b37d-87e98ad088ed-1024x574.png"
+                src={image}
                 alt="image1"
-                className=" w-full"
+                className="h-full max-h-[600px] w-full"
               />
               <div className="flex items-center gap-2 lg:gap-5 my-4 flex-wrap">
                 <img
-                  src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/585385994.jpg?k=9c28ef0fa548707cf93afee1b775822d92306257c7bfb8821d6d332705aa76c7&o=&hp=1"
+                  src={image}
                   alt="image1"
                   className="max-w-[70px] max-h-[40px] sm:max-w-[100px] sm:max-h-[80px]  md:max-w-[150px] md:max-h-[120px] xl:max-w-[200px] xl:max-h-[150px] max-auto"
                 />
-                <img
-                  src="https://fhfurnishings.com/wp-content/uploads/2019/02/LSX-045-Fess-BAcker-Double-Tree-1.jpg"
-                  alt="image1"
-                  className="max-w-[70px] max-h-[40px] sm:max-w-[100px] sm:max-h-[80px]  md:max-w-[150px] md:max-h-[120px] xl:max-w-[200px] xl:max-h-[150px] max-auto"
-                />
+                <div className="relative">
+                  <img
+                    src="https://www.londonbay.com/hubfs/Somerset_Master%20Bedroom-1%20copy.jpg"
+                    alt="image1"
+                    className="max-w-[70px] h-[40px] sm:max-w-[100px] sm:h-[80px] md:max-w-[150px] md:h-[90px] xl:max-w-[200px] xl:h-[110px] max-auto"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center text-white"></div>
+                </div>
                 <div className="relative">
                   <img
                     src="https://thechatwalny.agencydominion.net/uploads/2024/06/The-Chatwal-Luxury-Collection-Hotel-New-York-Deluxe-Double-Beds-01.jpg"
@@ -131,41 +170,55 @@ const PropertyDetailsAll = () => {
             <div className="bg-[#ECF5FF] p-6">
               <p className="font-normal text-[#6B7280]">Property Value</p>
               <h1 className="text-[#252323] text-2xl font-bold mt-2 mb-4">
-                $ 300k - $ 310k
+                $ {price}K
               </h1>
               <p className="font-medium text-[#6B7280] mb-8">
-                Your bid can not be than 10% of the property Minimum value.
+                If your bid is the highest among all participants, the property
+                will be added to your profile (win-property).
               </p>
               <div>
-                <p className="text-sm text-[#252323] font-normal mb-1">Min</p>
-                <div className="px-4 py-3 bg-white mb-2">
-                  <span className="text-[#252323] font-normal">$ 280k</span>
-                </div>
-                <p className="text-sm text-[#252323] font-normal mb-1">Max</p>
-                <div className="px-4 py-3 bg-white">
-                  <span className="text-[#252323] font-normal">$ 320k</span>
-                </div>
-              </div>
-              <div className="mt-6">
-                <MultiRangeSlider
-                  min={280}
-                  max={305}
-                  minVal={280}
-                  maxVal={305}
-                />
-              </div>
-              <div className="text-center ">
-                <button className="px-6 py-3 bg-[#0059B1] rounded-md text-white btn">
-                  Bid Property
-                </button>
+                <p className="font-medium text-[#000000] mb-4">
+                  All time highest Bid: ${presentValue}k
+                </p>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <div>
+                    <input
+                      {...register("price", { required: true })}
+                      type="number"
+                      min={price}
+                      placeholder="Enter your price in K"
+                      className="w-full p-4 outline-none rounded"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full bg-[#0E3EDC] mt-5 text-white p-4 rounded font-bold"
+                  >
+                    Submit Bid
+                  </button>
+                </form>
               </div>
             </div>
-            <div className="mt-6  ">
-              <img
-                className="w-full h-[354px] rounded"
-                src="https://img.freepik.com/premium-vector/abstract-city-map-with-pins-navigation-app_95169-1513.jpg"
-                alt=""
-              />
+            {/* //*map and property owner start */}
+            <div className="my-8 p-6">
+              <div>
+                <iframe
+                  className="h-[300px] md:h-[400px] w-full"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.7585546584483!2d90.37906557487813!3d23.756004191582336!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c752e6a245a9%3A0x5b5b0754d1d7fc4d!2zTmV3IE1hcmtldCwgRGhha2EgUGFyaywgRGhha2EsIEJhbmcgMTIwOQ!5e0!3m2!1sen!2sbd!4v1693085560040!5m2!1sen!2sbd"
+                  width="600"
+                  height="450"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
+              <div className="my-8">
+                <p className="font-medium text-[#6B7280]">Owner:</p>
+                <h1 className="font-bold text-[#0E3EDC] text-2xl">John Doe</h1>
+                <p className="font-normal text-[#6B7280]">
+                  +977 92435482 <br /> johndoe@example.com
+                </p>
+              </div>
             </div>
           </div>
         </div>

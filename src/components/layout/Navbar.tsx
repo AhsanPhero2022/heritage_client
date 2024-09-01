@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 const NavItems = [
   { id: "1", name: "Home", route: "/" },
   { id: "2", name: "Buy", route: "/buyScreen" },
-  { id: "3", name: "Sell", route: "/propertyDetails" },
+  { id: "3", name: "All Properties", route: "/allProperties" },
   { id: "4", name: "About", route: "/about" },
 ];
 
@@ -112,7 +112,7 @@ const Navbar = () => {
           <div className="">
             <ul className="flex justify-end items-center gap-2 flex-row py-0">
               <li className="cursor-pointer text-sm group relative px-2 md:text-[18px] ">
-                <Link to="/manageRentals">Manage Rentals</Link>
+                <Link to="/manage-rentals">Manage Rentals</Link>
               </li>
               <Link to="/signIn">
                 <li className="cursor-pointer text-sm font-semibold group relative px-2 md:text-[18px] ">

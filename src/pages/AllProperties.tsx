@@ -8,6 +8,7 @@ import { BsTextarea } from "react-icons/bs";
 import { VscLayoutStatusbar } from "react-icons/vsc";
 import { useEffect, useState } from "react";
 import { PropertyProps } from "../types";
+import HomeLoanSlider from "../components/ui/HomeLoanSlider";
 
 const AllProperties = () => {
   const [properties, setProperties] = useState([]);
@@ -46,7 +47,7 @@ const AllProperties = () => {
         </div>
         <div className="">
           {properties.map((property: PropertyProps) => (
-            <Link key={property.id} to="/propertyDetails">
+            <div key={property._id}>
               <div className="bg-[#F9FAFB] grid lg:grid-cols-12 my-8">
                 <div className="max-h-[200px] lg:col-span-4 ">
                   <img
@@ -73,7 +74,9 @@ const AllProperties = () => {
                       <img src={location} alt="" className="size-4" />
                       {property.location}
                     </p>
-                    <Button variant={"outline"}>Bid Now</Button>
+                    <Link to={`/propertyDetails/${property._id}`}>
+                      <Button variant={"outline"}>Bid Now</Button>
+                    </Link>
                   </div>
                   <div className="flex justify-start items-center">
                     <p className="w-[150px]">Property details</p>
@@ -104,9 +107,10 @@ const AllProperties = () => {
                   </div>
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
+        <HomeLoanSlider />
       </Container>
     </div>
   );

@@ -2,6 +2,7 @@ import { Layout, Menu } from "antd";
 import logo from "../../assets/logo.png";
 import { NavLink, Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Header from "../ManageRentals/Header";
 
 const { Content, Footer, Sider } = Layout;
 
@@ -24,6 +25,12 @@ const items = [
   {
     key: 1,
     label: <NavLink to="/manage-rentals/all-property">All Property</NavLink>,
+  },
+  {
+    key: 5,
+    label: (
+      <NavLink to="/manage-rentals/testimonials">Add Testimonials</NavLink>
+    ),
   },
 ];
 
@@ -51,6 +58,7 @@ const ManageRenLayout = () => {
               minHeight: 360,
             }}
           >
+            <Header />
             <Outlet />
           </div>
         </Content>

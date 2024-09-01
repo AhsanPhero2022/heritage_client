@@ -14,7 +14,8 @@ import CreateProperty from "../components/ManageRentals/CreateProperty";
 import AllProperty from "../components/ManageRentals/AllProperty";
 import UserProfilePage from "../components/ManageRentals/UserProfilePage";
 import PropertyWin from "../components/ManageRentals/PropertyWin";
-
+import { Params } from "react-router-dom";
+import CreateTestimonial from "../components/ManageRentals/CreateTestimonial";
 const routes = [
   {
     path: "/",
@@ -33,8 +34,10 @@ const routes = [
         element: <BuyScreen />,
       },
       {
-        path: "/propertyDetails",
+        path: "/propertyDetails/:id",
         element: <PropertyDetails />,
+        loader: ({ params }: { params: Params }) =>
+          fetch(`http://localhost:5000/properties/${params.id}`),
       },
       {
         path: "/allProperties",
@@ -62,6 +65,10 @@ const routes = [
       {
         path: "all-property",
         element: <AllProperty />,
+      },
+      {
+        path: "testimonials",
+        element: <CreateTestimonial />,
       },
     ],
   },
