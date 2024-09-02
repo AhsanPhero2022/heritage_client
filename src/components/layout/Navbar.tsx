@@ -105,7 +105,7 @@ const Navbar = () => {
             )}
           </div>
 
-          <div>
+          <div className="lg:me-12 xl:me-12 md:me-8">
             <Link to="/" className="cursor-pointer">
               <img src={logo} className="w-[53px] h-20" alt="" />
             </Link>
