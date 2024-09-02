@@ -69,7 +69,7 @@ const AllProperties = () => {
                   <div className="flex justify-between items-center my-3">
                     <p className="text-3xl font-bold ">{property.name}</p>
 
-                    <p className="text-3xl font-bold">${property.price}</p>
+                    <p className="text-3xl font-bold">${property.price}k</p>
                   </div>
 
                   <div className="flex justify-between items-center">

@@ -57,7 +57,7 @@ const CreateProperty = () => {
             <h2 className="text-white font-semibold my-3">Price</h2>
             <input
               type="number"
-              placeholder="Price"
+              placeholder="Price k"
               className="h-8 rounded-md w-full px-3"
               {...register("price")}
             />
