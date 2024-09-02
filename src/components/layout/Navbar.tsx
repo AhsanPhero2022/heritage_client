@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { Button } from "../ui/button";
 import { useAuth, useUser } from "@clerk/clerk-react";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 const NavItems = [
   { id: "1", name: "Home", route: "/" },
