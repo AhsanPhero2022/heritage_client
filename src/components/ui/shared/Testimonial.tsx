@@ -10,15 +10,7 @@ import Container from "../Container";
 import { FaStar } from "react-icons/fa";
 import { FaRegStarHalfStroke } from "react-icons/fa6";
 import { useEffect, useState } from "react";
-
-type TTestimonial = {
-  _id: number;
-  src: string;
-  alt: string;
-  name: string;
-  title: string;
-  description: string;
-};
+import { TTestimonial } from "../../../types";
 
 const Testimonial = () => {
   const [properties, setProperties] = useState([]);
@@ -27,7 +19,9 @@ const Testimonial = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/testimonials");
+        const response = await fetch(
+          "https://sm-technology-server.vercel.app/testimonials"
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }

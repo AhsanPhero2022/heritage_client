@@ -1,68 +1,78 @@
-import map from "../../../assets/icons/fi-bs-marker.png";
-import bed from "../../../assets/icons/bed.png";
-import bathtub from "../../../assets/icons/bathtub.png";
-import balcony from "../../../assets/icons/balcony.png";
-import shelves from "../../../assets/icons/shelves.png";
-import Container from "../Container";
-import { useLoaderData } from "react-router-dom";
-import { PropertyProps } from "../../../types";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { toast } from "sonner";
-import { useUser } from "@clerk/clerk-react";
-import { Button } from "../button";
+import location from "../assets/icons/fi-bs-marker.png";
+import bed from "../assets/icons/bed.png";
+import bathtub from "../assets/icons/bathtub.png";
+import balcony from "../assets/icons/balcony.png";
+import shelves from "../assets/icons/shelves.png";
+import Container from "../components/ui/Container";
+import Amenities from "../components/ui/PropertyDetails/Amenities";
+import OtherServices from "../components/ui/shared/OtherServices";
+import Properties from "../components/ui/shared/Properties";
+import MultiRangeSlider from "../components/ui/MultiRangeSlider";
+import { useEffect, useState } from "react";
+import { Button } from "../components/ui/button";
 import { Link } from "react-router-dom";
+import { TPropertyProps } from "../types";
 
-type FormValues = {
-  price: number;
-};
+const DetailsPage = () => {
+  const [property, setProperty] = useState<TPropertyProps | null>(null);
+  const [minProperty, setMinProperty] = useState<TPropertyProps | null>(null);
+  const [loading, setLoading] = useState(true);
 
-const PropertyDetailsAll = () => {
-  const { user } = useUser(); // Get the current logged-in user
-  const properties = useLoaderData() as PropertyProps;
-  const { _id, name, image, price, location } = properties;
-  const { register, handleSubmit } = useForm<FormValues>();
-
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    try {
-      const response = await fetch(
-        `https://sm-technology-server.vercel.app/properties/${_id}`,
-        {
-          method: "put",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            price: data.price,
-            user: user?.id,
-          }),
-        }
-      );
-
-      if (response.ok) {
-        toast.success(
-          "your Bid is highest this property add to your profile successfully!"
+  useEffect(() => {
+    const fetchProperty = async () => {
+      try {
+        const response = await fetch(
+          "https://sm-technology-server.vercel.app/properties"
         );
-      } else {
-        toast.error("Failed to submit the bid, please try again later.");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data: TPropertyProps[] = await response.json();
+
+        // Find the property with the maximum price
+        const maxPriceProperty = data.reduce((max, property) =>
+          property.price > max.price ? property : max
+        );
+        const minPriceProperty = data.reduce((min, property) =>
+          property.price < min.price ? property : min
+        );
+
+        // Store the max price property in the state
+        setProperty(maxPriceProperty);
+        setMinProperty(minPriceProperty);
+      } catch (error) {
+        console.error("There was a problem with the fetch operation:", error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error:", error);
-      toast.error("Failed to submit the bid, please try again later.");
-    }
-  };
+    };
+
+    fetchProperty();
+  }, []);
+
+  console.log(property?.price);
+  console.log(minProperty);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="my-11">
       <Container>
-        {/* //*Header */}
+        {/* //*Header  */}
         <div className="">
           <div className="flex flex-col lg:flex-row lg:items-center mb-2">
-            <h1 className=" text-xl font-semibold text-[#010101]">{name}</h1>
-            <span className=" lg:ml-16 font-extrabold text-2xl">${price}K</span>
+            <h1 className=" text-xl font-semibold text-[#010101]">
+              {property?.name}
+            </h1>
+            <span className=" lg:ml-16 font-extrabold text-2xl">
+              $ {property?.price}k
+            </span>
           </div>
           <div className="flex items-center mb-8">
-            <img src={map} alt="" className="size-4 mr-2" />
-            <p className="text-[#606060] font-normal">{location}</p>
+            <img src={location} alt="" className="size-4 mr-2" />
+            <p className="text-[#606060] font-normal">{property?.location}</p>
           </div>
         </div>
         <div className="grid lg:grid-cols-3  gap-4 ">
@@ -70,28 +80,21 @@ const PropertyDetailsAll = () => {
           <div className="col-span-2">
             {/* //*Image Section */}
             <div>
-              <img
-                src={image}
-                alt="image1"
-                className="h-full max-h-[600px] w-full"
-              />
+              <img src={property?.image} alt="image1" className=" w-full" />
               <div className="flex items-center gap-2 lg:gap-5 my-4 flex-wrap">
                 <img
-                  src={image}
+                  src={minProperty?.image}
+                  alt="image1"
+                  className="max-w-[70px] max-h-[40px] sm:max-w-[100px] sm:max-h-[80px]  md:max-w-[150px] md:max-h-[120px] xl:max-w-[200px] xl:max-h-[150px] max-auto"
+                />
+                <img
+                  src={property?.image}
                   alt="image1"
                   className="max-w-[70px] max-h-[40px] sm:max-w-[100px] sm:max-h-[80px]  md:max-w-[150px] md:max-h-[120px] xl:max-w-[200px] xl:max-h-[150px] max-auto"
                 />
                 <div className="relative">
                   <img
-                    src="https://www.londonbay.com/hubfs/Somerset_Master%20Bedroom-1%20copy.jpg"
-                    alt="image1"
-                    className="max-w-[70px] h-[40px] sm:max-w-[100px] sm:h-[80px] md:max-w-[150px] md:h-[90px] xl:max-w-[200px] xl:h-[110px] max-auto"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center text-white"></div>
-                </div>
-                <div className="relative">
-                  <img
-                    src="https://thechatwalny.agencydominion.net/uploads/2024/06/The-Chatwal-Luxury-Collection-Hotel-New-York-Deluxe-Double-Beds-01.jpg"
+                    src="https://okl.scene7.com/is/image/OKL/one%20kings%20lane_bunny%20williams_BEDROOM?wid=1066&op_sharpen=1"
                     alt="image1"
                     className="max-w-[70px] h-[40px] sm:max-w-[100px] sm:h-[80px] md:max-w-[150px] md:h-[90px] xl:max-w-[200px] xl:h-[110px] max-auto"
                   />
@@ -172,45 +175,42 @@ const PropertyDetailsAll = () => {
             <div className="bg-[#ECF5FF] p-6">
               <p className="font-normal text-[#6B7280]">Property Value</p>
               <h1 className="text-[#252323] text-2xl font-bold mt-2 mb-4">
-                $ {price}K
+                $ 300k - $ 310k
               </h1>
               <p className="font-medium text-[#6B7280] mb-8">
-                If your bid is the highest among all participants, the property
-                will be added to your profile (win-property).
+                Your bid can not be than 10% of the property Minimum value.
               </p>
               <div>
-                <p className="font-medium text-[#000000] mb-4">
-                  All time highest Bid: ${price}k
-                </p>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <div>
-                    <input
-                      {...register("price", { required: true })}
-                      type="number"
-                      min={price}
-                      placeholder="Enter your price in $"
-                      className="w-full p-4 outline-none rounded"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full bg-[#0E3EDC] mt-5 text-white p-4 rounded font-bold"
-                  >
-                    Submit Bid
-                  </button>
-                </form>
+                <p className="text-sm text-[#252323] font-normal mb-1">Min</p>
+                <div className="px-4 py-3 bg-white mb-2">
+                  <span className="text-[#252323] font-normal">
+                    $ {minProperty?.price}k
+                  </span>
+                </div>
+                <p className="text-sm text-[#252323] font-normal mb-1">Max</p>
+                <div className="px-4 py-3 bg-white">
+                  <span className="text-[#252323] font-normal">
+                    $ {property?.price}k
+                  </span>
+                </div>
+              </div>
+              <div className="mt-6">
+                <MultiRangeSlider
+                  min={280}
+                  max={305}
+                  minVal={280}
+                  maxVal={305}
+                />
+              </div>
+              <div className="text-center ">
                 <Link to="/manage-rentals/testimonials">
-                  <Button
-                    variant={"outline"}
-                    className="w-full py-4 mt-5  rounded font-bold"
-                  >
-                    Add a testimonial
+                  <Button variant={"outline"} className="px-6 py-3">
+                    Add a Testimonial
                   </Button>
                 </Link>
               </div>
             </div>
-            {/* //*map and property owner start */}
-            <div className="my-8 p-6">
+            <div className="mt-6  ">
               <div>
                 <iframe
                   className="h-[300px] md:h-[400px] w-full"
@@ -222,19 +222,15 @@ const PropertyDetailsAll = () => {
                   referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
               </div>
-              <div className="my-8">
-                <p className="font-medium text-[#6B7280]">Owner:</p>
-                <h1 className="font-bold text-[#0E3EDC] text-2xl">Soriful</h1>
-                <p className="font-normal text-[#6B7280]">
-                  01977-435482 <br /> soriful@gmail.com
-                </p>
-              </div>
             </div>
           </div>
         </div>
+        <Amenities />
+        <OtherServices />
+        <Properties title="Others Nearby Properties" />
       </Container>
     </div>
   );
 };
 
-export default PropertyDetailsAll;
+export default DetailsPage;

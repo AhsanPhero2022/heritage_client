@@ -1,6 +1,24 @@
 import Container from "../Container";
 
 const OurTeam = () => {
+  const teamMembers = [
+    {
+      name: "Mr. Parvez",
+      contact: "john@example.com",
+      role: "Project Manager",
+    },
+    {
+      name: "Oliver",
+      contact: "jane@example.com",
+      role: "Designer",
+    },
+    {
+      name: "Michael",
+      contact: "michael@example.com",
+      role: "Developer",
+    },
+  ];
+
   const teamImages = [
     "https://www.corporatephotographerslondon.com/wp-content/uploads/2016/07/approachable-professional-headshots-London.jpg",
     "https://media.licdn.com/dms/image/v2/D4D12AQFUrM6o_8m-WQ/article-inline_image-shrink_1500_2232/article-inline_image-shrink_1500_2232/0/1705940547574?e=1730332800&v=beta&t=MlNxztddf7QhaANGuvOVSM15mDGa02gH4jYTkq2CViw",
@@ -23,13 +41,19 @@ const OurTeam = () => {
 
         {/* Images Section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[32px]">
-          {teamImages.map((src, index) => (
-            <img
-              key={index}
-              src={src}
-              alt="Team member"
-              className="w-[280px] h-[350px] sm:max-w-[384px] sm:max-h-[417px] object-cover mx-auto"
-            />
+          {teamMembers.map((member, index) => (
+            <div key={index} className="text-center">
+              <img
+                src={teamImages[index]}
+                alt={`Team member ${index + 1}`}
+                className="w-[280px] h-[350px] sm:max-w-[384px] sm:max-h-[417px] object-cover mx-auto"
+              />
+              <div className="mt-4">
+                <h3 className="text-xl font-bold">{member.name} </h3>
+                <p className="text-sm text-gray-600">{member.contact}</p>
+                <p className="text-sm text-gray-600">{member.role}</p>
+              </div>
+            </div>
           ))}
         </div>
       </Container>

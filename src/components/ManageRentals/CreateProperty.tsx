@@ -1,25 +1,22 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
-
-type Inputs = {
-  name: string;
-  location: string;
-  price: string;
-  image: string;
-};
+import { InputsProps } from "../../types";
 
 const CreateProperty = () => {
-  const { register, handleSubmit, reset } = useForm<Inputs>();
+  const { register, handleSubmit, reset } = useForm<InputsProps>();
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<InputsProps> = async (data) => {
     try {
-      const response = await fetch("http://localhost:5000/properties", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        "https://sm-technology-server.vercel.app/properties",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
       if (response.ok) {
         toast.success("Property added successfully!");
@@ -35,7 +32,7 @@ const CreateProperty = () => {
   return (
     <div className="bg-[#001529]  px-8 py-12 min-h-screen">
       <h1 className="text-3xl font-bold text-center my-12 text-white">
-        Add a testimonial about the donation
+        Add a property
       </h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="gap-4 mb-8">

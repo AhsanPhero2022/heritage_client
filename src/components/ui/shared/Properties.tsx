@@ -25,7 +25,9 @@ const Properties = ({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/properties");
+        const response = await fetch(
+          "https://sm-technology-server.vercel.app/properties"
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }

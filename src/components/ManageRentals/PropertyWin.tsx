@@ -11,7 +11,7 @@ import { useUser } from "@clerk/clerk-react";
 import { toast } from "sonner";
 
 const PropertyWin = () => {
-  const [properties, setProperties] = useState([]);
+  const [properties, setProperties] = useState<PropertyProps[]>([]);
   const [loading, setLoading] = useState(true);
   const { user } = useUser();
 
@@ -20,13 +20,14 @@ const PropertyWin = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/properties");
+        const response = await fetch(
+          "https://sm-technology-server.vercel.app/properties"
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
 
-        // Filter the properties where properties.userId matches currentUserId
         const filteredProperties = data.filter(
           (property: PropertyProps) => property.userId === currentUserId
         );
@@ -53,9 +54,12 @@ const PropertyWin = () => {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/properties/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `https://sm-technology-server.vercel.app/properties/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (response.ok) {
         setProperties((prev) => prev.filter((property) => property._id !== id));

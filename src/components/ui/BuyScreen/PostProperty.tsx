@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Container from "../Container";
 import { Button } from "../button";
 
@@ -16,9 +17,11 @@ const PostPropertyCTA = () => {
               </p>
             </div>
             <div>
-              <Button className="py-4 px-7 bg-[#F06224] hover:bg-[#F06224] hover:text-white text-white">
-                Post Property
-              </Button>
+              <Link to="/manage-rentals/create-property">
+                <Button className="py-4 px-7 bg-[#F06224] hover:bg-[#F06224] hover:text-white text-white">
+                  Post Property
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

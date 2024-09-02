@@ -1,25 +1,22 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
-
-type Inputs = {
-  name: string;
-  src: string;
-  title: string;
-  description: string;
-};
+import { TestimonialsInputsProps } from "../../types";
 
 const CreateTestimonial = () => {
-  const { register, handleSubmit, reset } = useForm<Inputs>();
+  const { register, handleSubmit, reset } = useForm<TestimonialsInputsProps>();
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<TestimonialsInputsProps> = async (data) => {
     try {
-      const response = await fetch("http://localhost:5000/testimonials", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        "https://sm-technology-server.vercel.app/testimonials",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
       if (response.ok) {
         toast.success("Testimonial added successfully!");

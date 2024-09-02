@@ -2,6 +2,7 @@ import Container from "../Container";
 import { Button } from "../button";
 import backgroundVideo from "../../../assets/videos/thumbnail.mp4";
 import search from "../../../assets/icons/search.png";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
   return (
@@ -25,12 +26,14 @@ const Banner = () => {
             properties.
           </p>
           <div>
-            <Button className="bg-[#005EAE] border border-[#005EAE] hover:bg-[#005EAE] hover:border-[#005EAE] text-white px-4 py-7 flex justify-center items-center rounded-[8px]">
-              <span>
-                <img src={search} alt="" />
-              </span>
-              <span className="ml-1 md:text-lg">Find Property</span>
-            </Button>
+            <Link to="/buyScreen">
+              <Button className="bg-[#005EAE] border border-[#005EAE] hover:bg-[#005EAE] hover:border-[#005EAE] text-white px-4 py-7 flex justify-center items-center rounded-[8px]">
+                <span>
+                  <img src={search} alt="" />
+                </span>
+                <span className="ml-1 md:text-lg">Find Property</span>
+              </Button>
+            </Link>
           </div>
         </div>
       </Container>

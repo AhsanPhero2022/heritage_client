@@ -2,6 +2,7 @@ import search from "../../../assets/icons/propertySearch.png";
 import player from "../../../assets/icons/player.png";
 import { Button } from "../button";
 import Container from "../Container";
+import { Link } from "react-router-dom";
 
 const PropertySection = () => {
   const properties = [
@@ -94,12 +95,14 @@ const PropertySection = () => {
                 {property.title}
               </h3>
               <p className="text-[#667085] mb-12">{property.description}</p>
-              <Button className="bg-[#E6EFF7] border border-[#E6EFF7] hover:bg-[#E6EFF7] hover:border-[#E6EFF7] text-[#00437C] px-3 py-5 flex justify-center items-center rounded-[8px] mx-auto lg:mx-0">
-                <span>
-                  <img src={search} alt="" />
-                </span>
-                <span className="ml-1 md:text-base">Find Property</span>
-              </Button>
+              <Link to="allProperties">
+                <Button className="bg-[#E6EFF7] border border-[#E6EFF7] hover:bg-[#E6EFF7] hover:border-[#E6EFF7] text-[#00437C] px-3 py-5 flex justify-center items-center rounded-[8px] mx-auto lg:mx-0">
+                  <span>
+                    <img src={search} alt="" />
+                  </span>
+                  <span className="ml-1 md:text-base">Find Property</span>
+                </Button>
+              </Link>
             </div>
           </div>
         ))}

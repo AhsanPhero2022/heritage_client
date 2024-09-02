@@ -1,13 +1,6 @@
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
-
-type TData = {
-  name: string;
-  _id: string;
-  image: string;
-  location: string;
-  price: number;
-};
+import { TData } from "../../types";
 
 const AllProperty = () => {
   const [properties, setProperties] = useState<TData[]>([]);
@@ -16,7 +9,9 @@ const AllProperty = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/properties");
+        const response = await fetch(
+          "https://sm-technology-server.vercel.app/properties"
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -40,9 +35,12 @@ const AllProperty = () => {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/properties/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `https://sm-technology-server.vercel.app/properties/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (response.ok) {
         setProperties((prev) => prev.filter((property) => property._id !== id));

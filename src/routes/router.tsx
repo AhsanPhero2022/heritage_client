@@ -4,12 +4,10 @@ import Home from "../pages/Home";
 import About from "../pages/About";
 import BuyScreen from "../pages/BuyScreen";
 import PropertyDetails from "../pages/PropertyDetails";
-
 import AllProperties from "../pages/AllProperties";
 import SignInPage from "../auth/SignInPage";
 import SignUpPage from "../auth/SignUpPage";
 import ManageRenLayout from "../components/layout/ManageRenLayout";
-
 import CreateProperty from "../components/ManageRentals/CreateProperty";
 import AllProperty from "../components/ManageRentals/AllProperty";
 import UserProfilePage from "../components/ManageRentals/UserProfilePage";
@@ -17,6 +15,8 @@ import PropertyWin from "../components/ManageRentals/PropertyWin";
 import { Params } from "react-router-dom";
 import CreateTestimonial from "../components/ManageRentals/CreateTestimonial";
 import SortedProperties from "../pages/SotedProperties";
+import PrivateRoute from "../private/PrivateRoute";
+import DetailsPage from "../pages/DetailsPage";
 const routes = [
   {
     path: "/",
@@ -25,6 +25,10 @@ const routes = [
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/details",
+        element: <DetailsPage />,
       },
       {
         path: "/about",
@@ -36,9 +40,15 @@ const routes = [
       },
       {
         path: "/propertyDetails/:id",
-        element: <PropertyDetails />,
+        element: (
+          <PrivateRoute>
+            <PropertyDetails />
+          </PrivateRoute>
+        ),
         loader: ({ params }: { params: Params }) =>
-          fetch(`http://localhost:5000/properties/${params.id}`),
+          fetch(
+            `https://sm-technology-server.vercel.app/properties/${params.id}`
+          ),
       },
       {
         path: "/allProperties",
@@ -52,7 +62,11 @@ const routes = [
   },
   {
     path: "manage-rentals",
-    element: <ManageRenLayout />,
+    element: (
+      <PrivateRoute>
+        <ManageRenLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
         index: true,

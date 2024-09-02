@@ -9,9 +9,10 @@ import { toast } from "react-toastify";
 const NavItems = [
   { id: "1", name: "Home", route: "/" },
   { id: "2", name: "Buy", route: "/buyScreen" },
-  { id: "3", name: "All Properties", route: "/allProperties" },
-  { id: "4", name: "Sorted Properties", route: "/sorted" },
-  { id: "5", name: "About", route: "/about" },
+  { id: "3", name: "Sell", route: "/details" },
+  { id: "4", name: "All", route: "/allProperties" },
+  { id: "5", name: "Sorted", route: "/sorted" },
+  { id: "6", name: "About", route: "/about" },
 ];
 
 const Navbar = () => {
