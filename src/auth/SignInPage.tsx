@@ -1,5 +1,4 @@
 import { SignIn } from "@clerk/clerk-react";
-
 import { dark } from "@clerk/themes";
 import heroBackground from "../assets/Cybersecurity.jpeg";
 
