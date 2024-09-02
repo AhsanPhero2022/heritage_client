@@ -11,7 +11,7 @@ This project is a web application that allows users to manage and interact with 
 
 ## Live Demo
 
-You can view the live project here: [Live Demo](#) _(https://heritage-client.vercel.app)_
+You can view the live project here: [Live Demo](#) _https://magnificent-licorice-553a60.netlify.app_
 
 ## Technologies Used
 
